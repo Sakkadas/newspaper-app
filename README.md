@@ -1,7 +1,9 @@
-# Newspaper-app | Look at [Heroku](https://djn-newspaper.herokuapp.com/)
+# Simple Newspaper-app | Look at [Heroku](https://djn-newspaper.herokuapp.com/)
 
 ### Learning project with *William Vincent*
 
+# Preview 
+<a href="https://gifyu.com/image/O5SW"><img src="https://s6.gifyu.com/images/SNIMOK-EKRANA-2021-08-02-V-19.53.02.png" alt="SNIMOK-EKRANA-2021-08-02-V-19.53.02.png" border="0" width=400px; /></a>
 
 
 # Implemented
