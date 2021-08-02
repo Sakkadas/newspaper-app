@@ -1,6 +1,10 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from environs import Env
+
+env = Env()
+env.read_env()
 
 load_dotenv()
 
@@ -8,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -21,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third-party
     'crispy_forms',
+    'whitenoise.runserver_nostatic',
     # local apps
     'accounts',
     'pages',
@@ -30,6 +35,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -58,10 +64,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": env.dj_db_url("DATABASE_URL")
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -89,7 +92,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Static settings
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
